@@ -2,7 +2,9 @@ const client = require('./client');
 
 const {
   fetchProducts,
-  createProduct
+  createProduct,
+  fetchTopTen,
+  createTopTen
 } = require('./products');
 
 const {
@@ -23,6 +25,7 @@ const {
 
 const seed = async()=> {
   const SQL = `
+    DROP TABLE IF EXISTS topTen;
     DROP TABLE IF EXISTS line_items;
     DROP TABLE IF EXISTS orders;
     DROP TABLE IF EXISTS products CASCADE;
@@ -57,7 +60,12 @@ const seed = async()=> {
       quantity INTEGER DEFAULT 1,
       CONSTRAINT product_and_order_key UNIQUE(product_id, order_id)
     );
-
+    CREATE TABLE topTen(
+      id UUID PRIMARY KEY,
+      product_id UUID REFERENCES products(id) NOT NULL,
+      rank INTEGER DEFAULT 0
+    );
+    
   `;
   await client.query(SQL);
 
@@ -71,6 +79,9 @@ const seed = async()=> {
     createProduct({ name: 'book2' }),
     createProduct({ name: 'book3' }),
     createProduct({ name: 'book4' }),
+  ]);
+  const [ah] = await Promise.all([
+    createTopTen({ product_id: foo.id,  rank:1 }),
   ]);
   let orders = await fetchOrders(ethyl.id);
   let cart = orders.find(order => order.is_cart);
@@ -93,5 +104,7 @@ module.exports = {
   authenticate,
   findUserByToken,
   seed,
+  fetchTopTen,
+  createTopTen,
   client
 };
