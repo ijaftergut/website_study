@@ -1,15 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-const Ranking = ({ auth, products }) => {
+const Ranking = ({ auth, products, topTen }) => {
   return (
     <div>
       <h2>Ranking</h2>
-      <ul className='products'>
-        {products.map((product) => (
-          <li key={product.id}>
-            {product.name}
-            {auth.id ? null : null}
-            {auth.is_admin ? <Link to={`/products/${product.id}/edit`}>Edit</Link> : null}
+      <ul className='ranking'>
+        {topTen.map((rank) =>(
+          <li key={rank.id}>
+            {rank.rank}
           </li>
         ))}
       </ul>
