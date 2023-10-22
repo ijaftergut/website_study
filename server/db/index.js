@@ -24,9 +24,9 @@ const {
 const seed = async()=> {
   const SQL = `
     DROP TABLE IF EXISTS line_items;
-    DROP TABLE IF EXISTS products;
     DROP TABLE IF EXISTS orders;
-    DROP TABLE IF EXISTS users;
+    DROP TABLE IF EXISTS products CASCADE;
+    DROP TABLE IF EXISTS users CASCADE;
 
     CREATE TABLE users(
       id UUID PRIMARY KEY,
@@ -62,15 +62,15 @@ const seed = async()=> {
   await client.query(SQL);
 
   const [moe, lucy, ethyl] = await Promise.all([
-    createUser({ username: 'moe', password: 'm_password', is_admin: false}),
-    createUser({ username: 'lucy', password: 'l_password', is_admin: false}),
-    createUser({ username: 'ethyl', password: '1234', is_admin: true})
+    createUser({ username: 'isaac', password: '1234', is_admin: true}),
+    createUser({ username: 'patti', password: '1234', is_admin: true}),
+    createUser({ username: 'ted', password: '1234', is_admin: true})
   ]);
   const [foo, bar, bazz] = await Promise.all([
-    createProduct({ name: 'foo' }),
-    createProduct({ name: 'bar' }),
-    createProduct({ name: 'bazz' }),
-    createProduct({ name: 'quq' }),
+    createProduct({ name: 'book1' }),
+    createProduct({ name: 'book2' }),
+    createProduct({ name: 'book3' }),
+    createProduct({ name: 'book4' }),
   ]);
   let orders = await fetchOrders(ethyl.id);
   let cart = orders.find(order => order.is_cart);

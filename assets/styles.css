@@ -1,5 +1,6 @@
 body {
   font-family: verdana;
+  background-color: lightblue;
 }
 
 form {
@@ -9,4 +10,50 @@ form {
 
 form > * {
   margin: 0.5rem;
+}
+nav{
+  display: flex;
+  max-width: 100%;
+  margin-top: 60px;
+}
+
+nav a {
+  margin-right: 30px;
+  text-decoration:wavy;
+  text-transform: none; 
+  color: dodgerblue;
+  transition: color 0.3s;
+  font-weight: bold;
+  font-size: 22px;
+}
+span{
+  text-decoration:wavy;
+  color: tomato;
+}
+button{
+  display: flex;
+  margin: 1rem;
+  padding: 10px 20px;
+  box-shadow: 3rem;
+  align-items: center;
+  justify-content: center;
+}
+.products{
+  display: flex;
+  flex-wrap:wrap;
+}
+.products > li{
+  list-style-type: none;
+  border: 2px solid teal;
+  background-color:slateblue;
+  border-radius: 1rem;
+  margin: 1rem;
+}
+.productButton{
+  background: teal;
+  border: none;
+  transition: 0.3s;
+}
+button:hover {
+  background-color: rgb(208, 203, 203); /* gray on hover */
 }
